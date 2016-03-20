@@ -30,4 +30,8 @@ public class UserMeal {
     public int getCalories() {
         return calories;
     }
+
+    public Object getId() {
+        return id;
+    }
 }
