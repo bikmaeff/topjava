@@ -1,22 +1,35 @@
 package ru.javawebinar.topjava.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
  * GKislin
  * 11.01.2015.
  */
+@NamedQueries(@NamedQuery(name=UserMeal.DELETE, query="DELETE FROM UserMeal u WHERE u.id=:id and u.user=:id"))
+
+@Entity
+@Table(name = "MEALS") //, uniqueConstraints = {@UniqueConstraint(columnNames = "user_id, date_time", name = "meals_unique_user_datetime_idx")})
 public class UserMeal extends BaseEntity {
 
+    public static final String DELETE = "UserMeal.delete";
+
+    @Column(name = "date_time", nullable = false)
+    @NotEmpty
     private LocalDateTime dateTime;
 
+    @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "calories", nullable = false)
     protected int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
     private User user;
 
     public UserMeal() {
